@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #div{
+        position: absolute;
+        text-align: center;
+        z-index: 999;
+    }
+    #div .imagem{
+        width: 100px;
+        content:url("morty.png");
+    }
+</style>
+<body>
+    <div id="div">
+        <img class="imagem">
+    </div>
+
+    <script>
+        mover(document.getElementById("div"))
+
+        function mover(elemento){
+            var aceleracao_x = 0, aceleracao_y = 0, pos_x = 0, pos_y = 0
+
+            // evento sobre o click do mouse
+            elemento.onmousedown = function(e){
+                e = e || window.event
+                e.preventDefault()
+                pos_x = e.clientX
+                pos_y = e.clientY
+                document.onmouseup   = pararDeMoverElemento
+                document.onmousemove = moverElemento
+            }
+
+
+            // evento ao mover o mouse
+            function moverElemento(e){
+                e = e || window.event
+                e.preventDefault()
+
+                aceleracao_x = pos_x - e.clientX
+                aceleracao_y = pos_y - e.clientY
+                pos_x = e.clientX
+                pos_y = e.clientY
+
+                elemento.style.top  = (elemento.offsetTop - aceleracao_y)  + "px"
+                elemento.style.left = (elemento.offsetLeft - aceleracao_x) + "px"
+            }
+
+
+            // evento ao soltar botão do mouse
+            function pararDeMoverElemento(){
+                document.onmouseup   = null
+                document.onmousemove = null
+            }
+        }
+    </script>
+
+</body>
+</html>
